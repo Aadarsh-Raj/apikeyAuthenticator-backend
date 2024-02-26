@@ -4,26 +4,26 @@ const server = express();
 const port = 8000;
 const api_key = "adklsjsaislkffdlsjdadfiafsjsfs";
 const fs = require("fs");
-const writeFile = (logString)=> fs.appendFileSync("./access.log", logString + "\n");
-server.use((req, res, next)=>{
-writeFile(`Request URL : ${req.url}, Time : ${new Date()}, IP : ${req.ip}`);
-next();
+const writeFile = (logString) =>
+  fs.appendFileSync("./access.log", logString + "\n");
+server.use((req, res, next) => {
+  writeFile(`Request URL : ${req.url}, Time : ${new Date()}, IP : ${req.ip}`);
+  next();
 });
-server.use((req, res, next)=>{
-if(req.url == "/"){
+server.use((req, res, next) => {
+  if (req.url == "/") {
     res.send("Home Page");
     return;
-}
-    if(req.query.api_key === api_key){
-        next();
-    } else{
-        res.status(403).json({
-            success: false,
-            message: "Invailid Api Key"
-        });
-    }
+  }
+  if (req.query.api_key === api_key) {
+    next();
+  } else {
+    res.status(403).json({
+      success: false,
+      message: "Invailid Api Key",
+    });
+  }
 });
-
 
 server.get("/", (req, res) => {
   res.send("Home Page");
@@ -68,6 +68,12 @@ server.get("/product/:id", (req, res) => {
   });
 });
 
+server.use("*", (req, res) => {
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
+});
 server.listen(port, () => {
   console.log(`Server is listening at http://localhost:${port}`);
 });

@@ -14,3 +14,7 @@ Products Page --> http://localhost:8000/products?api_key=adklsjsaislkffdlsjdadfi
 Particular Product --> http://localhost:8000/product/5?api_key=adklsjsaislkffdlsjdadfiafsjsfs
 
 ![alt text](image-2.png)
+
+Restricted Path --> http://localhost:8000/product/5
+
+![alt text](image-3.png)
