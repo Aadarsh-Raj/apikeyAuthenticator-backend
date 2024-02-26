@@ -8,9 +8,12 @@ const writeFile = (logString)=> fs.appendFileSync("./access.log", logString + "\
 server.use((req, res, next)=>{
 writeFile(`Request URL : ${req.url}, Time : ${new Date()}, IP : ${req.ip}`);
 next();
-})
+});
 server.use((req, res, next)=>{
-
+if(req.url == "/"){
+    res.send("Home Page");
+    return;
+}
     if(req.query.api_key === api_key){
         next();
     } else{
